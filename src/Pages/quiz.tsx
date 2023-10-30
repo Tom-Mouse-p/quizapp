@@ -18,45 +18,49 @@ function Quiz() {
         questions: [
             {
                 question: "What is the capital of France?",
-                options: ["London", "Berlin", "Paris"],
+                options: ["London", "Berlin", "Paris", "Madrid"],
                 answer: "Paris",
             },
             {
                 question: "Which city is the capital of Japan?",
-                options: ["Beijing", "Seoul", "Tokyo"],
+                options: ["Beijing", "Seoul", "Tokyo", "Osaka"],
                 answer: "Tokyo",
             },
             {
                 question: "Canberra is the capital of which country?",
-                options: ["Australia", "New Zealand", "Canada"],
+                options: ["Australia", "New Zealand", "Canada", "Fiji"],
                 answer: "Australia",
-            },
-            {
-                question: "What is the capital of Brazil?",
-                options: ["Buenos Aires", "Sao Paulo", "Brasilia"],
-                answer: "Brasilia",
             },
         ],
     };
 
     const [quizTopic, setQuizTopic] = useState<string>("");
+
     const [currentQuestion, setCurrentQuestion] = useState<Question>(
-        response.questions[0] // Initial question
+        response.questions[0]
     );
-    const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(3);
+    const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
+    const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
     const totalQuestions: number = response.questions.length;
 
     useEffect(() => {
         setQuizTopic(response.topic);
-        populateBoard(response);
+        populateBoard(response, true);
     }, []);
 
-    function populateBoard(response: Response) {
+    const populateBoard = (response: Response, next: boolean) => {
         if (currentQuizIndex < totalQuestions) {
-            setCurrentQuizIndex(currentQuizIndex + 1);
+            if (next) {
+                setCurrentQuizIndex(currentQuizIndex + 1);
+            } else setCurrentQuizIndex(currentQuizIndex - 1);
             setCurrentQuestion(response.questions[currentQuizIndex]);
         }
-    }
+    };
+
+    const handleSubmit = (next: boolean) => {
+        populateBoard(response, next);
+    };
 
     return (
         <main className="hero">
@@ -70,20 +74,35 @@ function Quiz() {
                 <p>{currentQuestion.question}</p>
                 <div className="optionList">
                     {currentQuestion.options.map((option, index) => (
-                        <button type="button" value={option} key={index}>
+                        <button
+                            type="button"
+                            className={`quiz-button ${
+                                selectedOption === option ? "selected" : ""
+                            }`}
+                            onClick={() => setSelectedOption(option)}
+                            key={index}
+                        >
                             {option}
                         </button>
                     ))}
                 </div>
                 <div className="quizNav">
-                    {currentQuizIndex < totalQuestions ? (
-                        <button className="nextButton">Next</button>
-                    ) : (
-                        <button className="nextButton">Submit</button>
-                    )}
-                    {currentQuizIndex > 1 && (
-                        <button className="backButton">Back</button>
-                    )}
+                    <button
+                        type="button"
+                        className="nextButton"
+                        onClick={() => handleSubmit(true)}
+                    >
+                        {currentQuizIndex < totalQuestions ? "Next" : "Submit"}
+                    </button>
+                    {/* {currentQuizIndex > 1 && (
+                        <button
+                            type="button"
+                            className="backButton"
+                            onClick={() => handleSubmit(false)}
+                        >
+                            Back
+                        </button>
+                    )} */}
                 </div>
             </div>
         </main>
