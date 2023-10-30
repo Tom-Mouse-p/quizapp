@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "../assets/styles/quiz.css";
+import party from "party-js";
 
 interface Question {
     question: string;
@@ -34,6 +35,8 @@ function Quiz() {
         ],
     };
 
+    const totalQuestions: number = response.questions.length;
+
     const [quizTopic, setQuizTopic] = useState<string>("");
 
     const [currentQuestion, setCurrentQuestion] = useState<Question>(
@@ -42,32 +45,99 @@ function Quiz() {
     const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-    const totalQuestions: number = response.questions.length;
+    const [userAnswers, setUserAnswers] = useState<string[]>(
+        Array(totalQuestions).fill("")
+    );
 
     useEffect(() => {
         setQuizTopic(response.topic);
-        populateBoard(response, true);
+        handleDisable(true);
     }, []);
 
-    const populateBoard = (response: Response, next: boolean) => {
-        if (currentQuizIndex < totalQuestions) {
+    useEffect(() => {
+        setCurrentQuestion(response.questions[currentQuizIndex]);
+        console.log("updated index", currentQuizIndex);
+    }, [currentQuizIndex]);
+
+    useEffect(() => {
+        // setCurrentQuestion(response.questions[currentQuizIndex]);
+        console.log("updated question", currentQuestion);
+    }, [currentQuestion]);
+
+    const populateBoard = (next: boolean) => {
+        if (currentQuizIndex < totalQuestions - 1) {
             if (next) {
                 setCurrentQuizIndex(currentQuizIndex + 1);
             } else setCurrentQuizIndex(currentQuizIndex - 1);
-            setCurrentQuestion(response.questions[currentQuizIndex]);
         }
     };
 
-    const handleSubmit = (next: boolean) => {
-        populateBoard(response, next);
+    const reset = () => {
+        setCurrentQuizIndex(0);
+        setSelectedOption(null);
     };
+
+    const handleDisable = (toggle: boolean) => {
+        const nextButton = document.getElementById(
+            "nextButton"
+        ) as HTMLButtonElement;
+
+        if (nextButton) nextButton.disabled = toggle;
+    };
+
+    const handleSubmit = (next: boolean) => {
+        if (currentQuizIndex == totalQuestions - 1) {
+            declareResults();
+        } else {
+            populateBoard(next);
+            handleDisable(true);
+        }
+    };
+
+    const handleSelect = (option: string) => {
+        setSelectedOption(option);
+        setUserAnswers((prevAnswers) => {
+            const newAnswers = [...prevAnswers];
+            newAnswers[currentQuizIndex] = option;
+            return newAnswers;
+        });
+        handleDisable(false);
+    };
+
+    const calculateScore = () => {
+        let score = 0;
+        for (let i = 0; i < totalQuestions; i++) {
+            if (userAnswers[i] === response.questions[i].answer) {
+                score++;
+            }
+        }
+        return score;
+    };
+
+    const declareResults = () => {
+        const resultPage = document.getElementById("quizResult");
+        if (resultPage) resultPage.style.display = "flex";
+
+        const score = document.getElementById("score");
+        if (score) {
+            let count = 0;
+            while (count < 3) {
+                setTimeout(() => {
+                    party.confetti(score);
+                }, 2000 * count); // Schedule each confetti animation 2 seconds apart
+                count++;
+            }
+        }
+    };
+
+    // declareResults();
 
     return (
         <main className="hero">
             <div className="quizTitle">
                 <h3>{quizTopic}</h3>
                 <span className="questionCounter">
-                    {currentQuizIndex}/{totalQuestions}
+                    {currentQuizIndex + 1}/{totalQuestions}
                 </span>
             </div>
             <div className="quizContainer">
@@ -79,7 +149,7 @@ function Quiz() {
                             className={`quiz-button ${
                                 selectedOption === option ? "selected" : ""
                             }`}
-                            onClick={() => setSelectedOption(option)}
+                            onClick={() => handleSelect(option)}
                             key={index}
                         >
                             {option}
@@ -89,6 +159,7 @@ function Quiz() {
                 <div className="quizNav">
                     <button
                         type="button"
+                        id="nextButton"
                         className="nextButton"
                         onClick={() => handleSubmit(true)}
                     >
@@ -103,6 +174,21 @@ function Quiz() {
                             Back
                         </button>
                     )} */}
+                    {/* <button type="button" onClick={reset}>
+                        reset
+                    </button> */}
+                </div>
+                <div className="quizResult" id="quizResult">
+                    <div></div>
+                    <p id="score">
+                        Your score: {calculateScore()} out of {totalQuestions}
+                    </p>
+                    {/* {
+                        <button className="btn" onClick={(e) => partyFun(e)}>
+                            click me🎉
+                        </button>
+                    } */}
+                    <div className="bottomDesign"></div>
                 </div>
             </div>
         </main>

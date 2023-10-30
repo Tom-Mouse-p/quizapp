@@ -34,6 +34,10 @@
     border-radius: 0.25rem;
 }
 
+.nextButton:disabled {
+    border: 1px solid #ccc;
+}
+
 .nextButton {
     border: 1px solid var(--color-secondary);
 }
@@ -59,4 +63,40 @@
 
 .quiz-button:focus {
     outline: 1px solid var(--color-primary);
+}
+
+.bottomDesign {
+    height: 50px;
+    background-color: var(--color-secondary);
+}
+
+.quizResult {
+    z-index: 1;
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 0%;
+    left: 0%;
+    background: white;
+    width: 100vw;
+    height: 100vh;
+    animation: slideIn 1s ease-in-out;
+}
+
+@keyframes slideIn {
+    0% {
+        transform: translateX(100%);
+        /* opacity: 0; */
+    }
+    100% {
+        transform: translateX(0);
+        /* opacity: 1; */
+    }
+}
+
+#score {
+    /* background-color: #ccc; */
+    max-width: 200px;
+    margin: 0 auto;
 }

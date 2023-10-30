@@ -8,7 +8,7 @@ import Quiz from "./Pages/quiz";
 function App() {
     return (
         <>
-            <NavBar />
+            {/* <NavBar /> */}
             <Quiz />
         </>
     );
