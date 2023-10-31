@@ -1,3 +1,8 @@
+.hero {
+    max-width: 768px;
+    margin: 0 auto;
+}
+
 .quizTitle {
     background-color: var(--color-primary);
     padding: 1rem;
@@ -16,8 +21,6 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    /* padding: 1rem; */
-    /* background-color: aqua; */
 }
 
 .quizNav {
@@ -66,7 +69,8 @@
 }
 
 .bottomDesign {
-    height: 50px;
+    height: 100px;
+    width: 100vw;
     background-color: var(--color-secondary);
 }
 
@@ -87,16 +91,13 @@
 @keyframes slideIn {
     0% {
         transform: translateX(100%);
-        /* opacity: 0; */
     }
     100% {
         transform: translateX(0);
-        /* opacity: 1; */
     }
 }
 
 #score {
-    /* background-color: #ccc; */
     max-width: 200px;
     margin: 0 auto;
 }

@@ -36,15 +36,12 @@ function Quiz() {
     };
 
     const totalQuestions: number = response.questions.length;
-
     const [quizTopic, setQuizTopic] = useState<string>("");
-
+    const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
     const [currentQuestion, setCurrentQuestion] = useState<Question>(
         response.questions[0]
     );
-    const [currentQuizIndex, setCurrentQuizIndex] = useState<number>(0);
     const [selectedOption, setSelectedOption] = useState<string | null>(null);
-
     const [userAnswers, setUserAnswers] = useState<string[]>(
         Array(totalQuestions).fill("")
     );
@@ -59,22 +56,12 @@ function Quiz() {
         console.log("updated index", currentQuizIndex);
     }, [currentQuizIndex]);
 
-    useEffect(() => {
-        // setCurrentQuestion(response.questions[currentQuizIndex]);
-        console.log("updated question", currentQuestion);
-    }, [currentQuestion]);
-
     const populateBoard = (next: boolean) => {
         if (currentQuizIndex < totalQuestions - 1) {
             if (next) {
                 setCurrentQuizIndex(currentQuizIndex + 1);
             } else setCurrentQuizIndex(currentQuizIndex - 1);
         }
-    };
-
-    const reset = () => {
-        setCurrentQuizIndex(0);
-        setSelectedOption(null);
     };
 
     const handleDisable = (toggle: boolean) => {
@@ -124,13 +111,16 @@ function Quiz() {
             while (count < 3) {
                 setTimeout(() => {
                     party.confetti(score);
-                }, 2000 * count); // Schedule each confetti animation 2 seconds apart
+                }, 2000 * count);
                 count++;
             }
         }
     };
 
-    // declareResults();
+    // const reset = () => {
+    //     setCurrentQuizIndex(0);
+    //     setSelectedOption(null);
+    // };
 
     return (
         <main className="hero">
@@ -174,20 +164,12 @@ function Quiz() {
                             Back
                         </button>
                     )} */}
-                    {/* <button type="button" onClick={reset}>
-                        reset
-                    </button> */}
                 </div>
                 <div className="quizResult" id="quizResult">
                     <div></div>
                     <p id="score">
                         Your score: {calculateScore()} out of {totalQuestions}
                     </p>
-                    {/* {
-                        <button className="btn" onClick={(e) => partyFun(e)}>
-                            click me🎉
-                        </button>
-                    } */}
                     <div className="bottomDesign"></div>
                 </div>
             </div>
