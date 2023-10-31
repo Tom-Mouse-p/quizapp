@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "../assets/styles/quiz.css";
 import party from "party-js";
+import ResultTable from "../Components/ResultTable";
 
 interface Question {
     question: string;
@@ -53,7 +54,7 @@ function Quiz() {
 
     useEffect(() => {
         setCurrentQuestion(response.questions[currentQuizIndex]);
-        console.log("updated index", currentQuizIndex);
+        // console.log("updated index", currentQuizIndex);
     }, [currentQuizIndex]);
 
     const populateBoard = (next: boolean) => {
@@ -117,6 +118,28 @@ function Quiz() {
         }
     };
 
+    // Array.from(tableQuestion).forEach((element) => {
+    //     element.addEventListener("mouseenter", () => {
+    //         const key = element.getAttribute("data-key");
+    //         const questionElement = document.getElementById(
+    //             "tableQuestion" + key
+    //         );
+    //         if (questionElement) {
+    //             questionElement.style.display = "flex";
+    //         }
+    //     });
+
+    //     element.addEventListener("mouseleave", () => {
+    //         const key = element.getAttribute("data-key");
+    //         const questionElement = document.getElementById(
+    //             "tableQuestion" + key
+    //         );
+    //         if (questionElement) {
+    //             questionElement.style.display = "none"; // or your preferred style to hide the element
+    //         }
+    //     });
+    // });
+
     // const reset = () => {
     //     setCurrentQuizIndex(0);
     //     setSelectedOption(null);
@@ -167,9 +190,33 @@ function Quiz() {
                 </div>
                 <div className="quizResult" id="quizResult">
                     <div></div>
-                    <p id="score">
-                        Your score: {calculateScore()} out of {totalQuestions}
-                    </p>
+                    <div id="score">
+                        <p>
+                            Your score: {calculateScore()} out of{" "}
+                            {totalQuestions}
+                        </p>
+                        <div>
+                            <table id="quizResultBoard">
+                                <thead>
+                                    <tr>
+                                        <th>Q no.</th>
+                                        <th>Your Selection</th>
+                                        <th>Correct Answer</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {userAnswers.map((answer, index) => (
+                                        <ResultTable
+                                            key={index} // Ensure you set the key prop here
+                                            index={index}
+                                            answer={answer}
+                                            response={response}
+                                        />
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <div className="bottomDesign"></div>
                 </div>
             </div>
