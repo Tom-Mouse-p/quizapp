@@ -54,7 +54,6 @@ function Quiz() {
 
     useEffect(() => {
         setCurrentQuestion(response.questions[currentQuizIndex]);
-        // console.log("updated index", currentQuizIndex);
     }, [currentQuizIndex]);
 
     const populateBoard = (next: boolean) => {
@@ -117,28 +116,6 @@ function Quiz() {
             }
         }
     };
-
-    // Array.from(tableQuestion).forEach((element) => {
-    //     element.addEventListener("mouseenter", () => {
-    //         const key = element.getAttribute("data-key");
-    //         const questionElement = document.getElementById(
-    //             "tableQuestion" + key
-    //         );
-    //         if (questionElement) {
-    //             questionElement.style.display = "flex";
-    //         }
-    //     });
-
-    //     element.addEventListener("mouseleave", () => {
-    //         const key = element.getAttribute("data-key");
-    //         const questionElement = document.getElementById(
-    //             "tableQuestion" + key
-    //         );
-    //         if (questionElement) {
-    //             questionElement.style.display = "none"; // or your preferred style to hide the element
-    //         }
-    //     });
-    // });
 
     // const reset = () => {
     //     setCurrentQuizIndex(0);
@@ -207,7 +184,7 @@ function Quiz() {
                                 <tbody>
                                     {userAnswers.map((answer, index) => (
                                         <ResultTable
-                                            key={index} // Ensure you set the key prop here
+                                            key={index}
                                             index={index}
                                             answer={answer}
                                             response={response}

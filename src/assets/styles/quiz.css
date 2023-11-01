@@ -115,8 +115,7 @@
         padding: 1rem;
         border-radius: 0.5rem;
         position: relative;
-        top: -20%;
-        /* display: inline-block; */
+        top: -3rem;
     }
 
     @media (min-width: 768px) {
@@ -126,9 +125,10 @@
 
 table#quizResultBoard {
     width: 100%;
+    border-radius: 0.5rem;
     border-collapse: collapse;
     border: 1px solid var(--color-primary);
-    /* font-size: 0.5rem; */
+    position: relative;
 }
 
 th,
@@ -146,17 +146,12 @@ th {
 
 .correct {
     color: inherit;
-    /* background-color: green; */
 }
 
 .incorrect {
     background-color: rgb(249, 159, 159);
 }
 
-.tableQuestion {
-    /* display: none; */
-}
-
-.tableQuestion:hover {
-    display: default;
+.displayNone {
+    display: none;
 }

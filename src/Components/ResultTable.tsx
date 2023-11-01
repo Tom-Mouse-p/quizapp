@@ -17,7 +17,17 @@ interface ResultTableProps {
 
 function ResultTable({ index, answer, response }: ResultTableProps) {
     const tableContainers = document.getElementsByClassName("tableContainer");
-    // const tableQuestion = document.getElementsByClassName("tableContainer");
+    const tableQuestion = document.getElementsByClassName("tableQuestion");
+
+    Array.from(tableQuestion).forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+            element.classList.remove("displayNone");
+        });
+
+        element.addEventListener("mouseleave", () => {
+            element.classList.add("displayNone");
+        });
+    });
 
     Array.from(tableContainers).forEach((element) => {
         element.addEventListener("mouseenter", () => {
@@ -26,10 +36,7 @@ function ResultTable({ index, answer, response }: ResultTableProps) {
                 "tableQuestion" + key
             );
             if (questionElement) {
-                // console.log(questionElement.style.display);
-
-                questionElement.style.display = "inline";
-                // questionElement.style.backgroundColor = "red";
+                questionElement.classList.remove("displayNone");
             }
         });
 
@@ -39,11 +46,11 @@ function ResultTable({ index, answer, response }: ResultTableProps) {
                 "tableQuestion" + key
             );
             if (questionElement) {
-                questionElement.style.display = "none"; // or your preferred style to hide the element
-                // questionElement.style.backgroundColor = "white"; // or your preferred style to hide the element
+                questionElement.classList.add("displayNone");
             }
         });
     });
+
     return (
         <React.Fragment key={index}>
             <tr
@@ -63,7 +70,10 @@ function ResultTable({ index, answer, response }: ResultTableProps) {
                 </td>
                 <td>{response.questions[index].answer}</td>
             </tr>
-            <tr className="tableQuestion" id={"tableQuestion" + index}>
+            <tr
+                className="tableQuestion displayNone"
+                id={"tableQuestion" + index}
+            >
                 <td colSpan={3}>
                     Q.{index + 1} {response.questions[index].question}
                 </td>
