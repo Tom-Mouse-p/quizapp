@@ -180,7 +180,7 @@ function Quiz() {
                             onClick={() => handleSubmit(true)}
                         >
                             {currentQuizIndex < totalQuestions
-                                ? "Next"
+                                ? "Proceed"
                                 : "Submit"}
                         </button>
                         {/* {currentQuizIndex > 1 && (
