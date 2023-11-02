@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "../assets/pageStyles/quiz.css";
 import party from "party-js";
 import { signal } from "@preact/signals-react";
+import Result from "../Components/Result";
 
 interface Question {
     question: string;
@@ -21,6 +22,10 @@ interface QuizInfo {
     userAnswers: string[];
     response: Response; // Corrected the typo in the property name
 }
+
+// interface Reset {
+//     reset: () => void;
+// }
 
 // Create an initial QuizInfo object
 export const quizInfo = signal<QuizInfo>({
@@ -121,12 +126,15 @@ function Quiz() {
 
     const declareResults = () => {
         const resultPage = document.getElementById("quizResult");
-        if (resultPage) resultPage.style.display = "flex";
+        if (resultPage) {
+            // resultPage.classList.remove("slide-out");
+            resultPage.style.display = "flex";
+        }
 
         const score = document.getElementById("score");
         if (score) {
             let count = 0;
-            while (count < 3) {
+            while (count < 4) {
                 setTimeout(() => {
                     party.confetti(score);
                 }, 2000 * count);
@@ -135,10 +143,19 @@ function Quiz() {
         }
     };
 
-    // const reset = () => {
-    //     setCurrentQuizIndex(0);
-    //     setSelectedOption(null);
-    // };
+    const reset = () => {
+        setCurrentQuizIndex(0);
+        setSelectedOption(null);
+        handleDisable(true);
+
+        const resultPage = document.getElementById("quizResult");
+        if (resultPage) {
+            resultPage.style.display = "none";
+            // setTimeout(() => {
+            //     resultPage.classList.add("slide-out");
+            // }, 2000);
+        }
+    };
 
     // declareResults();
 
@@ -186,6 +203,7 @@ function Quiz() {
                     )} */}
                     </div>
                 </div>
+                <Result reset={reset} />
             </main>
         </>
     );

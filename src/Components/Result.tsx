@@ -2,6 +2,7 @@ import React from "react";
 import ResultTable from "./ResultTable";
 import { quizInfo } from "../Pages/quiz";
 import "../assets/componentStyles/result.css";
+import { Link } from "react-router-dom";
 
 // interface Question {
 //     question: string;
@@ -14,7 +15,11 @@ import "../assets/componentStyles/result.css";
 //     questions: Question[];
 // }
 
-function result() {
+interface Reset {
+    reset: () => void;
+}
+
+function result(reset: Reset) {
     const calculateScore = () => {
         let score = 0;
         for (let i = 0; i < quizInfo.value.total; i++) {
@@ -54,6 +59,23 @@ function result() {
                             ))}
                         </tbody>
                     </table>
+                </div>
+                <div className="endResultNav">
+                    <nav>
+                        <Link className="buttonPrimary" to="/">
+                            Home
+                        </Link>
+                        <a
+                            className="buttonPrimary"
+                            onClick={() => {
+                                console.log("ok");
+
+                                reset.reset();
+                            }}
+                        >
+                            Restart
+                        </a>
+                    </nav>
                 </div>
             </div>
             <div className="bottomDesign"></div>

@@ -12,8 +12,8 @@ function NavBar() {
                 <p id="navTitle">Quizzo</p>
                 <nav id="navBar">
                     <ul>
-                        <Link to="#">
-                            <li>About</li>
+                        <Link to="/">
+                            <li>Home</li>
                         </Link>
 
                         <Link to="#" className="buttonPrimary">

@@ -32,6 +32,12 @@
     color: var(--color-primary);
     padding: 0.5rem;
     border-radius: 0.25rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.buttonPrimary:hover {
+    color: var(--color-primary);
 }
 
 @keyframes rotate {

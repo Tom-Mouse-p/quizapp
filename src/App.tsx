@@ -25,7 +25,7 @@ function QuizApp() {
     return (
         <>
             <Quiz />
-            <Result />
+            {/* <Result /> */}
         </>
     );
 }
