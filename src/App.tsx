@@ -2,14 +2,30 @@
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 // import "./App.css";
+import { Route, Routes } from "react-router-dom";
 import NavBar from "./Components/NavBar";
+import Result from "./Components/Result";
+import Home from "./Pages/home";
 import Quiz from "./Pages/quiz";
 
 function App() {
     return (
         <>
-            {/* <NavBar /> */}
+            <NavBar />
+            <Routes>
+                <Route path="" element={<Home />} />
+                <Route path="/quiz" element={<QuizApp />} />
+            </Routes>
+            <div className="gradient"></div>
+        </>
+    );
+}
+
+function QuizApp() {
+    return (
+        <>
             <Quiz />
+            <Result />
         </>
     );
 }

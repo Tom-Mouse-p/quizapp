@@ -1,0 +1,93 @@
+.hero {
+    max-width: 768px;
+    margin: 2rem auto;
+    color: var(--color-primary);
+}
+
+.quizContainer {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    border-radius: 1rem;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    > p {
+        background-color: var(--color-secondary-alpha);
+        color: var(--color-primary);
+        padding: 1.5rem 1rem;
+        font-weight: 500;
+        font-size: large;
+        border-radius: 0.5rem;
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
+        /* filter: blur(20px); */
+
+        > span {
+            border-right: 1px solid var(--color-primary);
+            padding-right: 1rem;
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.optionList {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .quiz-button {
+        font-size: medium;
+        display: inline-block;
+        padding: 1rem;
+        border: 1px solid #cccccc;
+        background-color: #ffffff3d;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 0.3s;
+    }
+
+    .quiz-button.selected {
+        border: 2px solid var(--color-secondary);
+        /* background-color: var(--color-secondary); */
+    }
+
+    .quiz-button:focus {
+        outline: 1px solid var(--color-secondary);
+    }
+}
+
+.quizNav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.backButton,
+.nextButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    border-radius: 0.25rem;
+    font-size: medium;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nextButton {
+    border: 1px solid var(--color-secondary);
+}
+
+.nextButton:disabled {
+    border: 1px solid #ccc;
+}
+
+.backButton:focus,
+.nextButton:focus {
+    outline: 1px solid var(--color-primary);
+}

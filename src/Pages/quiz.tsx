@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import "../assets/styles/quiz.css";
+import "../assets/pageStyles/quiz.css";
 import party from "party-js";
-import ResultTable from "../Components/ResultTable";
+import { signal } from "@preact/signals-react";
 
 interface Question {
     question: string;
@@ -13,6 +13,26 @@ interface Response {
     topic: string;
     questions: Question[];
 }
+
+interface QuizInfo {
+    title: string;
+    currentIndex: number;
+    total: number;
+    userAnswers: string[];
+    response: Response; // Corrected the typo in the property name
+}
+
+// Create an initial QuizInfo object
+export const quizInfo = signal<QuizInfo>({
+    title: "",
+    currentIndex: 0,
+    total: 0,
+    userAnswers: [],
+    response: {
+        topic: "Your Quiz Topic",
+        questions: [], // You can add questions here
+    },
+});
 
 function Quiz() {
     const response: Response = {
@@ -46,6 +66,14 @@ function Quiz() {
     const [userAnswers, setUserAnswers] = useState<string[]>(
         Array(totalQuestions).fill("")
     );
+
+    quizInfo.value = {
+        title: quizTopic,
+        total: totalQuestions,
+        currentIndex: currentQuizIndex,
+        userAnswers: userAnswers,
+        response: response,
+    };
 
     useEffect(() => {
         setQuizTopic(response.topic);
@@ -91,16 +119,6 @@ function Quiz() {
         handleDisable(false);
     };
 
-    const calculateScore = () => {
-        let score = 0;
-        for (let i = 0; i < totalQuestions; i++) {
-            if (userAnswers[i] === response.questions[i].answer) {
-                score++;
-            }
-        }
-        return score;
-    };
-
     const declareResults = () => {
         const resultPage = document.getElementById("quizResult");
         if (resultPage) resultPage.style.display = "flex";
@@ -122,40 +140,42 @@ function Quiz() {
     //     setSelectedOption(null);
     // };
 
+    // declareResults();
+
     return (
-        <main className="hero">
-            <div className="quizTitle">
-                <h3>{quizTopic}</h3>
-                <span className="questionCounter">
-                    {currentQuizIndex + 1}/{totalQuestions}
-                </span>
-            </div>
-            <div className="quizContainer">
-                <p>{currentQuestion.question}</p>
-                <div className="optionList">
-                    {currentQuestion.options.map((option, index) => (
+        <>
+            <main className="hero">
+                <div className="quizContainer">
+                    <p>
+                        <span>Q. {currentQuizIndex + 1}</span>{" "}
+                        {currentQuestion.question}
+                    </p>
+                    <div className="optionList">
+                        {currentQuestion.options.map((option, index) => (
+                            <button
+                                type="button"
+                                className={`quiz-button ${
+                                    selectedOption === option ? "selected" : ""
+                                }`}
+                                onClick={() => handleSelect(option)}
+                                key={index}
+                            >
+                                {option}
+                            </button>
+                        ))}
+                    </div>
+                    <div className="quizNav">
                         <button
                             type="button"
-                            className={`quiz-button ${
-                                selectedOption === option ? "selected" : ""
-                            }`}
-                            onClick={() => handleSelect(option)}
-                            key={index}
+                            id="nextButton"
+                            className="nextButton"
+                            onClick={() => handleSubmit(true)}
                         >
-                            {option}
+                            {currentQuizIndex < totalQuestions
+                                ? "Next"
+                                : "Submit"}
                         </button>
-                    ))}
-                </div>
-                <div className="quizNav">
-                    <button
-                        type="button"
-                        id="nextButton"
-                        className="nextButton"
-                        onClick={() => handleSubmit(true)}
-                    >
-                        {currentQuizIndex < totalQuestions ? "Next" : "Submit"}
-                    </button>
-                    {/* {currentQuizIndex > 1 && (
+                        {/* {currentQuizIndex > 1 && (
                         <button
                             type="button"
                             className="backButton"
@@ -164,40 +184,10 @@ function Quiz() {
                             Back
                         </button>
                     )} */}
-                </div>
-                <div className="quizResult" id="quizResult">
-                    <div></div>
-                    <div id="score">
-                        <p>
-                            Your score: {calculateScore()} out of{" "}
-                            {totalQuestions}
-                        </p>
-                        <div>
-                            <table id="quizResultBoard">
-                                <thead>
-                                    <tr>
-                                        <th>Q no.</th>
-                                        <th>Your Selection</th>
-                                        <th>Correct Answer</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {userAnswers.map((answer, index) => (
-                                        <ResultTable
-                                            key={index}
-                                            index={index}
-                                            answer={answer}
-                                            response={response}
-                                        />
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
-                    <div className="bottomDesign"></div>
                 </div>
-            </div>
-        </main>
+            </main>
+        </>
     );
 }
 
