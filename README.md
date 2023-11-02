@@ -32,6 +32,7 @@ This is a basic quiz application developed using React. It allows users to take 
 
 -   React Js
 -   Typescript
+-   Javascript
 -   HTML
 -   CSS
 
