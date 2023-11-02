@@ -40,12 +40,8 @@
 
 .quizTitle {
     background-color: var(--color-secondary-alpha);
-    /* background-color: #fff; */
     padding: 1rem;
     color: var(--color-primary);
-    /* border-width: 0 2px 2px 2px;
-    border-style: solid;
-    border-color: var(--color-secondary); */
     border-radius: 0 0 1rem 1rem;
     width: 100vw;
     max-width: 500px;

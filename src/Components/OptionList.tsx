@@ -1,4 +1,3 @@
-// import React from "react";
 interface Question {
     question: string;
     options: string[];

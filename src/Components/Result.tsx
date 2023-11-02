@@ -1,4 +1,3 @@
-// import React from "react";
 import ResultTable from "./ResultTable";
 import { quizInfo } from "../Pages/quiz";
 import "../assets/componentStyles/result.css";

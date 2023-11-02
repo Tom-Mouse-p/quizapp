@@ -20,14 +20,9 @@ interface QuizInfo {
     currentIndex: number;
     total: number;
     userAnswers: string[];
-    response: Response; // Corrected the typo in the property name
+    response: Response;
 }
 
-// interface Reset {
-//     reset: () => void;
-// }
-
-// Create an initial QuizInfo object
 export const quizInfo = signal<QuizInfo>({
     title: "",
     currentIndex: 0,
@@ -35,7 +30,7 @@ export const quizInfo = signal<QuizInfo>({
     userAnswers: [],
     response: {
         topic: "Your Quiz Topic",
-        questions: [], // You can add questions here
+        questions: [],
     },
 });
 
@@ -127,7 +122,6 @@ function Quiz() {
     const declareResults = () => {
         const resultPage = document.getElementById("quizResult");
         if (resultPage) {
-            // resultPage.classList.remove("slide-out");
             resultPage.style.display = "flex";
         }
 
@@ -151,9 +145,6 @@ function Quiz() {
         const resultPage = document.getElementById("quizResult");
         if (resultPage) {
             resultPage.style.display = "none";
-            // setTimeout(() => {
-            //     resultPage.classList.add("slide-out");
-            // }, 2000);
         }
     };
 
