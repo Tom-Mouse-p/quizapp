@@ -1,19 +1,8 @@
-import React from "react";
+// import React from "react";
 import ResultTable from "./ResultTable";
 import { quizInfo } from "../Pages/quiz";
 import "../assets/componentStyles/result.css";
 import { Link } from "react-router-dom";
-
-// interface Question {
-//     question: string;
-//     options: string[];
-//     answer: string;
-// }
-
-// interface Response {
-//     topic: string;
-//     questions: Question[];
-// }
 
 interface Reset {
     reset: () => void;
@@ -80,6 +69,7 @@ function result(reset: Reset) {
             </div>
             <div className="bottomDesign"></div>
             <div className="gradient"></div>
+            <div className="gradient2"></div>
         </div>
     );
 }

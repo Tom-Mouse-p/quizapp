@@ -1,11 +1,19 @@
 // import React from "react";
 
 import { Link } from "react-router-dom";
+import "../assets/pageStyles/home.css";
 
 function Home() {
     return (
-        <div>
-            <Link to="/quiz">quiz</Link>
+        <div className="hero">
+            <div className="titleCard">
+                <span>
+                    <h1>Brainstrome with Quizzo!</h1>
+                    <div>
+                        <Link to="/quiz">Play a Quiz</Link>
+                    </div>
+                </span>
+            </div>
         </div>
     );
 }

@@ -4,7 +4,7 @@
 // import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import Result from "./Components/Result";
+// import Result from "./Components/Result";
 import Home from "./Pages/home";
 import Quiz from "./Pages/quiz";
 
@@ -14,18 +14,10 @@ function App() {
             <NavBar />
             <Routes>
                 <Route path="" element={<Home />} />
-                <Route path="/quiz" element={<QuizApp />} />
+                <Route path="/quiz" element={<Quiz />} />
             </Routes>
             <div className="gradient"></div>
-        </>
-    );
-}
-
-function QuizApp() {
-    return (
-        <>
-            <Quiz />
-            {/* <Result /> */}
+            <div className="gradient2"></div>
         </>
     );
 }
